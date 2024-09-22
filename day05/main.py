@@ -10,32 +10,27 @@ nr_letters= (input("How many letters would you like in your password?\n"))
 nr_symbols = (input(f"How many symbols would you like?\n"))
 nr_numbers = (input(f"How many numbers would you like?\n"))
 
-if not nr_letters.isdigit() or not nr_symbols.isdigit() or not nr_numbers.isdigit():
-  print("Invalid value, enter a number instead.")
-else:
-  password = []
+password = []
 
-  random_letter = random.randint(0, 51)
-  for i in range(0, int(nr_letters)):
-    random_letter = random.randint(0, 51)
-    password.append(letters[random_letter])
+def generator(number, vals):
+  p = []
+  for _ in range(int(number)):
+    val = random.randint(0,len(vals) - 1)
+    char = vals[val]
+    if random.randint(0,1) and char.isalpha():
+      char.upper()
+    p.append(char)
+  return p
 
-  random_number = random.randint(0,9)
-  for i in range(0, int(nr_numbers)):
-    random_number = random.randint(0,9)
-    password.append(numbers[random_number])
+password += generator(nr_letters, letters)
+password += generator(nr_numbers, numbers)
+password += generator(nr_symbols, symbols)
 
-  random_symbol = random.randint(0,8)
-  for i in range(0, int(nr_symbols)):
-    random_symbol = random.randint(0,8)
-    password.append(symbols[random_symbol])
+random.shuffle(password)
 
-  random.shuffle(password)
-  print(f"Here is your password: {''.join(password)}")
+# Join the shuffled list into a string
+random_string = ''.join(password)
+print(random_string)
 
-  if len(password) <= 6:
-    print("Your password is weak, try to include at least 8 characters for a stronger password.")
-  elif len(password) == 7:
-    print("Your password is medium, try to include at least 8 characters for a stronger password.")
-  else:
-    print("Your password is strong.")
+
+  
