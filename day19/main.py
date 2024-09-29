@@ -1,34 +1,52 @@
 from turtle import Turtle, Screen
 import random
 
-is_race_on = False
 screen = Screen()
-screen.setup(width=500, height=400)
-user_bet = screen.textinput(title="Make your bet", prompt="Which color turtle will win the race? Enter a color: ").lower
-colors = ["red", "orange", "yellow", "green", "blue", "purple"]
-y_axis = [-100, -60, -20, 20, 60, 100]
-all_turtles = []
+screen_width = screen.window_width()
+w = Turtle()
+w.penup()
+w.hideturtle()
 
-for turtle_number in range(0, 6):
-    new_turtle = Turtle(shape="turtle")
-    new_turtle.penup()
-    new_turtle.color(colors[turtle_number])
-    new_turtle.goto(x=-230, y=y_axis[turtle_number])
-    all_turtles.append(new_turtle)
+def initiate_turtle(color, i):
+    t = Turtle()
+    t.shape('turtle')
+    t.color(color)
+    t.penup()
+    t.goto(-screen_width/2,40*i)
+    return t
 
-if user_bet:
-    is_race_on = True
+def move_forward(turtles):
+    for t in turtles:
+        if t.xcor() < int(screen_width / 2) - 45:
+            t.forward(random.randint(5,10))
+    
+    if any(t.xcor() >= int(screen_width / 2) - 45 for t in turtles):
+        return 
+    
+    screen.ontimer(lambda: move_forward(turtles), 100)
 
-while is_race_on:
-    for turtle in all_turtles:
-        if turtle.xcor() > 230:
-            winning_color = turtle.pencolor()
-            if winning_color == user_bet:
-                print(f"You've won! The {winning_color} turtle is the winner!")
-            else:
-                print(f"You've lost! The {winning_color} turtle is the winner!")
-            is_race_on = False
-        rand_distance = random.randint(0, 10)
-        turtle.forward(rand_distance)
+def finish_line():
+    l = Turtle()
+    l.hideturtle()
+    l.penup()
+    l.goto(int(screen_width/2) - 30, 350)
+    l.pendown()
+    l.goto(int(screen_width/2) - 30, -250)
+
+user_input = screen.textinput("Input Box", "Which colored Turtle is going to win the race?")
+
+turtles = []
+i = 0
+for color in ['red', 'blue', 'green', 'yellow', 'purple', 'pink', 'black']:
+    turtles.append(initiate_turtle(color, i))
+    i += 1
+
+finish_line()
+
+w.goto(0, (int(screen.window_height()/2)) - 30)
+w.write(f"User Predicted {user_input} to win", align='center', font=("Arial", 24, "normal"))
+screen.listen()
+screen.onkey(lambda: move_forward(turtles), "s")
+
 
 screen.exitonclick()
