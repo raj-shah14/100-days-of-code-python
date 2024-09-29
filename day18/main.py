@@ -1,43 +1,93 @@
 import turtle as t
 import random
 t.Turtle()
-
-color_list = [(236, 248, 243), (36, 95, 183), (236, 165, 79), (244, 223, 87), (215, 69, 105), (98, 197, 234),
-              (250, 51, 22), (203, 70, 21), (240, 106, 143), (185, 47, 90), (143, 233, 216), (252, 136, 166),
-              (165, 175, 233), (66, 45, 13), (72, 205, 170), (83, 187, 100), (20, 156, 51), (24, 36, 86), (252, 220, 0),
-              (164, 28, 8), (105, 39, 44), (250, 152, 2), (22, 151, 229), (108, 213, 249), (254, 12, 3), (38, 48, 98),
-              (98, 96, 186)]
-
-random_color = (random.choice(color_list))
-t.colormode(255)
-t.penup()
-t.speed("fastest")
 t.hideturtle()
+t.colormode(255)
+t.speed(50)
+t.pensize(5)
 
 
-def left_up():
-    t.setheading(90)
-    t.forward(50)
-    t.setheading(0)
+random_rgb_colors = [
+    (23, 123, 45),
+    (67, 89, 255),
+    (10, 200, 150),
+    (255, 100, 50),
+    (0, 0, 0),
+    (34, 12, 240),
+    (100, 50, 200),
+    (150, 180, 0),
+    (5, 99, 255),
+    (25, 70, 90),
+    (90, 45, 120),
+    (180, 200, 50),
+    (255, 220, 100),
+    (60, 80, 200),
+    (150, 0, 0),
+    (0, 255, 0),
+    (255, 0, 255),
+    (20, 100, 180),
+    (90, 60, 100),
+    (255, 40, 20),
+    (50, 150, 75),
+    (80, 200, 225),
+    (255, 150, 0),
+    (30, 10, 255),
+    (140, 220, 255),
+    (200, 100, 50),
+    (255, 0, 0),
+    (0, 100, 100),
+    (255, 255, 0),
+    (12, 12, 150),
+    (255, 60, 80),
+    (45, 255, 255),
+    (255, 120, 150),
+    (33, 44, 55),
+    (90, 255, 90),
+    (240, 130, 200),
+    (75, 100, 75),
+    (225, 50, 50),
+    (12, 34, 56),
+    (78, 90, 123),
+    (230, 230, 100),
+    (45, 30, 120),
+    (0, 0, 255),
+    (100, 200, 150),
+    (50, 50, 50),
+    (100, 255, 100),
+    (255, 165, 0),
+    (12, 180, 240),
+    (90, 60, 255),
+    (120, 200, 240),
+    (130, 60, 20),
+    (200, 150, 100),
+    (25, 75, 150),
+    (0, 125, 255),
+]
 
+def move_forward():
+    for steps in range(0, 20):
+        t.dot(random_rgb_colors[random.randint(0, len(random_rgb_colors) -1)])
+        t.penup()
+        t.forward(20)
+        t.pendown()    
 
-def right_up():
-    t.setheading(90)
-    t.forward(50)
-    t.setheading(180)
+for i in range(0, 10):
+    move_forward()
 
+    t.left(90)
+    t.penup()
+    t.forward(20)
+    t.left(90)
+    t.forward(20)
+    t.pendown()
 
-for _ in range(5):
-    for _ in range(10):
-        t.dot(20, (random.choice(color_list)))
-        t.setheading(180)
-        t.forward(50)
-    left_up()
-    for _ in range(10):
-        t.forward(50)
-        t.dot(20, (random.choice(color_list)))
-    right_up()
+    move_forward()
 
+    t.right(90)
+    t.penup()
+    t.forward(20)
+    t.right(90)
+    t.forward(20)
+    t.pendown()
 
-screen = t.Screen()
-screen.exitonclick()
+t.exitonclick()
