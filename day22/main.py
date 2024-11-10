@@ -1,44 +1,35 @@
-from turtle import Screen
+from turtle import Screen, Turtle
 from paddle import Paddle
 from ball import Ball
+
 from scoreboard import Scoreboard
 import time
 
 screen = Screen()
-screen.bgcolor("black")
 screen.setup(width=800, height=600)
-screen.title("Pong")
+screen.bgcolor("lightblue")
+screen.title("Ping Pong Game")
 screen.tracer(0)
 
-r_paddle = Paddle((350, 0))
-l_paddle = Paddle((-350, 0))
+p1 = Paddle((-370,0))
+p2 = Paddle((380,0))
 ball = Ball()
-scoreboard = Scoreboard()
 
 screen.listen()
-screen.onkeypress(r_paddle.go_up, "Up")
-screen.onkeypress(r_paddle.go_down, "Down")
-screen.onkeypress(l_paddle.go_up, "w")
-screen.onkeypress(l_paddle.go_down, "s")
+screen.onkey(p1.go_up, "Up")
+screen.onkey(p1.go_down, "Down")
+screen.onkey(p2.go_up, "w")
+screen.onkey(p2.go_down, "z")
 
 game_is_on = True
 while game_is_on:
-    time.sleep(ball.move_speed)
+    time.sleep(0.1)
     screen.update()
     ball.move()
 
-    if ball.ycor() > 280 or ball.ycor() < -280:
-        ball.bounce_y()
-
-    if ball.distance(r_paddle) < 50 and ball.xcor() > 320 or ball.distance(l_paddle) < 50 and ball.xcor() < -320:
-        ball.bounce_x()
-
-    if ball.xcor() > 380:
-        ball.reset_position()
-        scoreboard.l_point()
-
-    if ball.xcor() < -380:
-        ball.reset_position()
-        scoreboard.r_point()
+    if p1.distance(ball) <= 15:
+        ball.onimpact(p1, p2)
+    if p2.distance(ball) <= 15:
+        ball.onimpact(p1, p2)
 
 screen.exitonclick()
